@@ -16,7 +16,7 @@ class Card:
 	def getSuit(self):
 		return self.suit
 	def __str__(self):
-		return "This card is a " + self.name + " worth " + str(self.point_value)
+		return self.name
 
 cardsIndex =	{
   "0": ("spade", "2", 2, "2 of Spades"),
@@ -86,8 +86,12 @@ def draw_card():
 	return newCard
 
 def main():
-	newCard = draw_card()
-	print(newCard)
+	for i in range(5):
+		newCard = draw_card()
+		hand.append(newCard)
+	for i in range (len(hand)):
+		print(str(i + 1) + ": " + str(hand[i]))
+
 
 
 if __name__ == "__main__":
