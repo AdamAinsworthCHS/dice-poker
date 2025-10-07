@@ -18,61 +18,6 @@ class Card:
 	def __str__(self):
 		return "This card is a " + self.name + " worth " + str(self.point_value)
 
-cards =	{
-  "2s": ("spade", "2", 2, "2 of Spades"),
-  "3s": ("spade", "3", 3, "3 of Spades"),
-  "4s": ("spade", "4", 4, "4 of Spades"),
-  "5s": ("spade", "5", 5, "5 of Spades"),
-  "6s": ("spade", "6", 6, "6 of Spades"),
-  "7s": ("spade", "7", 7, "7 of Spades"),
-  "8s": ("spade", "8", 8, "8 of Spades"),
-  "9s": ("spade", "9", 9, "9 of Spades"),
-  "10s": ("spade", "10", 10, "10 of Spades"),
-  "js": ("spade", "jack", 11, "Jack of Spades"),
-  "qs": ("spade", "queen", 12, "Queen of Spades"),
-  "ks": ("spade", "king", 13, "King of Spades"),
-  "as": ("spade", "ace", 14, "Ace of Spades"),
-  "2c": ("club", "2", 2, "2 of Clubs"),
-  "3c": ("club", "3", 3, "3 of Clubs"),
-  "4c": ("club", "4", 4, "4 of Clubs"),
-  "5c": ("club", "5", 5, "5 of Clubs"),
-  "6c": ("club", "6", 6, "6 of Clubs"),
-  "7c": ("club", "7", 7, "7 of Clubs"),
-  "8c": ("club", "8", 8, "8 of Clubs"),
-  "9c": ("club", "9", 9, "9 of Clubs"),
-  "10c": ("club", "10", 10, "10 of Clubs"),
-  "jc": ("club", "jack", 11, "Jack of Clubs"),
-  "qc": ("club", "queen", 12, "Queen of Clubs"),
-  "kc": ("club", "king", 13, "King of Clubs"),
-  "ac": ("club", "ace", 14, "Ace of Clubs"),
-  "2d": ("diamond", "2", 2, "2 of Diamonds"),
-  "3d": ("diamond", "3", 3, "3 of Diamonds"),
-  "4d": ("diamond", "4", 4, "4 of Diamonds"),
-  "5d": ("diamond", "5", 5, "5 of Diamonds"),
-  "6d": ("diamond", "6", 6, "6 of Diamonds"),
-  "7d": ("diamond", "7", 7, "7 of Diamonds"),
-  "8d": ("diamond", "8", 8, "8 of Diamonds"),
-  "9d": ("diamond", "9", 9, "9 of Diamonds"),
-  "10d": ("diamond", "10", 10, "10 of Diamonds"),
-  "jd": ("diamond", "jack", 11, "Jack of Diamonds"),
-  "qd": ("diamond", "queen", 12, "Queen of Diamonds"),
-  "kd": ("diamond", "king", 13, "King of Diamonds"),
-  "ad": ("diamond", "ace", 14, "Ace of Diamonds"),
-  "2h": ("heart", "2", 2, "2 of Hearts"),
-  "3h": ("heart", "3", 3, "3 of Hearts"),
-  "4h": ("heart", "4", 4, "4 of Hearts"),
-  "5h": ("heart", "5", 5, "5 of Hearts"),
-  "6h": ("heart", "6", 6, "6 of Hearts"),
-  "7h": ("heart", "7", 7, "7 of Hearts"),
-  "8h": ("heart", "8", 8, "8 of Hearts"),
-  "9h": ("heart", "9", 9, "9 of Hearts"),
-  "10h": ("heart", "10", 10, "10 of Hearts"),
-  "jh": ("heart", "jack", 11, "Jack of Hearts"),
-  "qh": ("heart", "queen", 12, "Queen of Hearts"),
-  "kh": ("heart", "king", 13, "King of Hearts"),
-  "ah": ("heart", "ace", 14, "Ace of Hearts"),
-}
-
 cardsIndex =	{
   "0": ("spade", "2", 2, "2 of Spades"),
   "1": ("spade", "3", 3, "3 of Spades"),
@@ -132,15 +77,17 @@ cardsIndex =	{
 
 hand = []
 
-def draw_cards(number):
+def draw_card():
 	cardID = random.randrange(0, 51)
 	drawCard = str(cardID)
-	cardList = list(cardsIndex[cardID])
+	cardList = list(cardsIndex[drawCard])
 
-	newCard = Card(cardsIndex[drawCard])
+	newCard = Card(cardList[0], cardList[1], cardList[2], cardList[3])
+	return newCard
 
 def main():
-	draw_cards(1)
+	newCard = draw_card()
+	print(newCard)
 
 
 if __name__ == "__main__":
