@@ -80,6 +80,7 @@ cardsIndex =	{
 hand = []
 playing = []
 score = 0
+dice = 2
 
 
 #Draws a random card out of 52
@@ -97,6 +98,7 @@ def showCards():
 	print("")
 	print("Score: " + str(score))
 	print("Cards in Hand:")
+	print("Dice: " + str(dice))
 	for i in range (len(hand)):
 		print(str(i + 1) + ": " + str(hand[i]))
 	print("")
@@ -106,16 +108,29 @@ def showCards():
 	gameProcess()
 
 
-#Asks what card the player should play REWRITE NAME LATER
+#Asks the player what action they want to take
 def gameProcess():
+	global dice
 	handLength = len(hand)
 	cardsPlayLength = len(playing)
-	playCards = input("To play a card, type a number. To play a hand, type play: ")
-	if playCards != "play":
+	playCards = input("Draw Cards ('roll') Play Card ('#') Play Hand ('play'): ")
+	if playCards != "play" and playCards != "roll":
 		playCards = int(playCards)
 	else:
-		playHand()
-		return
+		if playCards == "roll":
+			if dice >= 1:
+				dice -= 1
+				for i in range(random.randrange(1, 6)):
+					newCard = draw_card()
+					hand.append(newCard)
+				showCards()
+				return
+			else:
+				print("No dice remaining")
+				gameProcess()
+		else:
+			playHand()
+			return
 	if cardsPlayLength < 5:
 			if playCards > handLength or playCards <= 0:
 				print("Card not found")
