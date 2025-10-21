@@ -3,7 +3,8 @@ Dice Poker Game
 by Adam Ainsworth
 """
 import random
-from card import Card
+from card import card
+from game_manager import game_manager
 
 
 
@@ -35,27 +36,25 @@ suit_index =	{
 #Main variables and lists
 hand = []
 playing = []
-score = 0
-dice = 2
 
 
 #Draws a random card out of 52
 def draw_card():
-	card_suit_id = random.randrange(1, 4)
-	card_value = random.randrange(2, 14)
+	card_suit_id = random.randrange(1, 5)
+	card_value = random.randrange(2, 15)
 	card_suit = suit_index[str(card_suit_id)]
 	card_rank = cards_index[str(card_value)]
 	card_name = card_rank + " of " + card_suit
 
-	new_card = Card(card_suit, card_rank, card_value, card_name)
+	new_card = card(card_suit, card_rank, card_value, card_name)
 	return new_card
 
 
 #Shows what cards are in hand and which are being played.
 def show_cards():
 	print("")
-	print("Score: " + str(score))
-	print("Dice: " + str(dice))
+	print("Score: " + str(game_manager.score))
+	print("Dice: " + str(game_manager.dice))
 	print("Cards in Hand:")
 	for i in range (len(hand)):
 		print(str(i + 1) + ": " + str(hand[i]))
@@ -69,7 +68,6 @@ def show_cards():
 
 #Asks the player what action they want to take
 def game_process():
-	global dice
 	hand_length = len(hand)
 	cards_play_length = len(playing)
 	play_cards = input("Draw Cards ('roll') Play Card ('#') Play Hand ('play') Quit ('q'): ")
@@ -77,9 +75,9 @@ def game_process():
 		play_cards = int(play_cards)
 	except ValueError:
 		if play_cards == "roll":
-			if dice >= 1:
-				dice -= 1
-				for i in range(random.randrange(1, 6)):
+			if game_manager.dice >= 1:
+				game_manager.dice -= 1
+				for i in range(random.randrange(1, 7)):
 					new_card = draw_card()
 					hand.append(new_card)
 				show_cards()
@@ -113,9 +111,8 @@ def game_process():
 
 #Calculates the point value of played hand and updates the score
 def play_hand():
-	global score
 	for i in range (len(playing)):
-		score = score + playing[i].get_point_value()
+		game_manager.score = game_manager.score + playing[i].get_point_value()
 	playing.clear()
 	show_cards()
 	return
@@ -130,12 +127,6 @@ def process(play_cards):
 
 
 def main():
-	global score
-	global dice
-	hand.clear()
-	playing.clear()
-	score = 0
-	dice = 2
 	for i in range(8):
 		new_card = draw_card()
 		hand.append(new_card)

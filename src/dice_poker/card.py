@@ -3,7 +3,7 @@ Card class
 By Adam Ainsworth
 """
 
-class Card:
+class card:
 	def __init__(self, suit, rank, point_value, name):
 		self.suit = suit
 		self.rank = rank
