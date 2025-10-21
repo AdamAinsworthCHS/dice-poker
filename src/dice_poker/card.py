@@ -1,6 +1,6 @@
 """
 Card class
-By Adam Ainsworth
+by Adam Ainsworth
 """
 
 class card:

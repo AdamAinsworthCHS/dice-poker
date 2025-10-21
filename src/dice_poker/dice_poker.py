@@ -108,17 +108,75 @@ def game_process():
 		game_process()
 		return
 
-
 #Calculates the point value of played hand and updates the score
 def play_hand():
+	print("Calculating hand...")
+	if calculate_flush() == True:
+		print("Hand: Flush. +2 dice +30 points")
+		game_manager.dice += 2
+		game_manager.score += 30
+	elif calculate_pairs() == 1:
+		print("Hand: Pair. +10 points")
+		game_manager.score += 10
+	elif calculate_pairs() == 2:
+		print("Hand: Two Pair +1 dice +15 points")
+		game_manager.dice += 1
+		game_manager.score += 15
+	else:
+		print("Hand: High Card. No bonuses")
 	for i in range (len(playing)):
 		game_manager.score = game_manager.score + playing[i].get_point_value()
 	playing.clear()
 	show_cards()
 	return
 
+#Checks if the current poker hand is a flush
+def calculate_flush():
+	if len(playing) != 5:
+		return False
+	first_suit = playing[0].get_suit()
+	flush = True
+	for i in range (len(playing)):
+		if playing[i].get_suit() != first_suit:
+			flush = False
+			break
+	return flush
 
-#Plays the card the player chose REWRITE NAME LATER
+#Checks if the current poker hand is a pair or two pair
+def calculate_pairs():
+	first_rank = 0
+	pairs = 0
+	pair_position_1 = 100
+	pair_position_2 = 100
+	for i in range (len(playing)):
+		first_rank = playing[i].get_point_value()
+		for a in range (len(playing)):
+			if playing[a].get_point_value() == first_rank:
+				if playing.index(playing[a]) == playing.index(playing[i]):
+					pass
+				else:
+					if (playing.index(playing[a]) == pair_position_1) or (
+					playing.index(playing[i]) == pair_position_2) or (
+					playing.index(playing[a]) == pair_position_2) or (
+					playing.index(playing[i]) == pair_position_1):
+						pass
+					else:
+						pairs += 1
+						pair_position_1 = playing.index(playing[a])
+						pair_position_2 = playing.index(playing[i])
+
+	if pairs == 0:
+		return 0
+	elif pairs == 1:
+		return 1
+	elif pairs >= 2:
+		return 2
+	
+	
+
+
+
+#Plays the card the player chose
 def process(play_cards):
 	playing.append(hand[int(play_cards) - 1])
 	hand.remove(hand[int(play_cards) - 1])
