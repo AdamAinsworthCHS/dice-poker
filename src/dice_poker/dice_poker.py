@@ -7,8 +7,6 @@ from card import card
 from game_manager import game_manager
 
 
-
-
 cards_index =	{
 	"2": ("2"),
 	"3": ("3"),
@@ -24,6 +22,7 @@ cards_index =	{
 	"13": ("King"),
 	"14": ("Ace")
 }
+
 
 suit_index =	{
 	"1": ("Spades"),
@@ -108,11 +107,21 @@ def game_process():
 		game_process()
 		return
 
+
 #Calculates the point value of played hand and updates the score
 def play_hand():
 	print("Calculating hand...")
 	if calculate_flush() == True:
-		print("Hand: Flush. +2 dice +30 points")
+		if calculate_straight == True:
+			print("Hand: Straight Flush. +5 dice +100 points")
+			game_manager.dice += 2
+			game_manager.score += 30
+		else:
+			print("Hand: Flush. +2 dice +30 points")
+			game_manager.dice += 2
+			game_manager.score += 30
+	elif calculate_straight() == True:
+		print("Hand: Straight. +2 dice +30 points")
 		game_manager.dice += 2
 		game_manager.score += 30
 	elif calculate_pairs() == 1:
@@ -130,6 +139,7 @@ def play_hand():
 	show_cards()
 	return
 
+
 #Checks if the current poker hand is a flush
 def calculate_flush():
 	if len(playing) != 5:
@@ -141,6 +151,7 @@ def calculate_flush():
 			flush = False
 			break
 	return flush
+
 
 #Checks if the current poker hand is a pair or two pair
 def calculate_pairs():
@@ -164,15 +175,30 @@ def calculate_pairs():
 						pairs += 1
 						pair_position_1 = playing.index(playing[a])
 						pair_position_2 = playing.index(playing[i])
-
 	if pairs == 0:
 		return 0
 	elif pairs == 1:
 		return 1
 	elif pairs >= 2:
 		return 2
-	
-	
+
+#Checks if the current poker hand is a straight
+def calculate_straight():
+	straight = True
+	if len(playing) != 5:
+		return False
+	card_values = []
+	for i in range(5):
+		card_values.append(playing[i].get_point_value())
+	card_values.sort()
+	for i in range (5):
+		if i != 4:
+			if (card_values[i]) == (card_values[i + 1] - 1):
+				pass
+			else:
+				straight = False
+				break
+	return straight
 
 
 
