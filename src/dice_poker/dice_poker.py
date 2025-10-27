@@ -146,7 +146,7 @@ def play_hand():
 	else:
 		print("Hand: High Card. No bonuses")
 	for i in range (len(playing)):
-		game_manager.score = game_manager.score + playing[i].get_point_value()
+		game_manager.score = game_manager.score + playing[i].point_value
 	playing.clear()
 	show_cards()
 	return
@@ -156,10 +156,10 @@ def play_hand():
 def calculate_flush():
 	if len(playing) != 5:
 		return False
-	first_suit = playing[0].get_suit()
+	first_suit = playing[0].suit
 	flush = True
 	for i in range (len(playing)):
-		if playing[i].get_suit() != first_suit:
+		if playing[i].suit != first_suit:
 			flush = False
 			break
 	return flush
@@ -171,10 +171,10 @@ def calculate_straight():
 	if len(playing) != 5:
 		return False
 	card_values = []
-	for i in range(5):
-		card_values.append(playing[i].get_point_value())
+	for i in range(len(playing)):
+		card_values.append(playing[i].point_value)
 	card_values.sort()
-	for i in range (5):
+	for i in range (len(playing)):
 		if i != 4:
 			if (card_values[i]) == (card_values[i + 1] - 1):
 				pass
@@ -189,9 +189,9 @@ def calculate_kinds():
 	first_rank = 0
 	count = 0
 	for i in range (len(playing)):
-		first_rank = playing[i].get_point_value()
+		first_rank = playing[i].point_value
 		for a in range (len(playing)):
-			if playing[a].get_point_value() == first_rank:
+			if playing[a].point_value == first_rank:
 				if playing.index(playing[a]) == playing.index(playing[i]):
 					pass
 				else:
@@ -215,27 +215,27 @@ def calculate_full_house():
 	total_2 = 0
 	pairs = 0
 	for i in range (len(playing)):
-		first_rank = playing[i].get_point_value()
+		first_rank = playing[i].point_value
 		for a in range (len(playing)):
-			if playing[a].get_point_value() == first_rank:
+			if playing[a].point_value == first_rank:
 				if playing.index(playing[a]) == playing.index(playing[i]):
 					pass
 				else:
-					if playing[a].get_point_value() == pair_rank_1 or playing[a].get_point_value() == pair_rank_2:
+					if playing[a].point_value == pair_rank_1 or playing[a].point_value == pair_rank_2:
 						pass
 					else:
 						pairs += 1
 						if pair_rank_1 == 0:
-							pair_rank_1 = playing[a].get_point_value()
+							pair_rank_1 = playing[a].point_value
 						elif pair_rank_2 == 0:
-							if playing[a].get_point_value() != pair_rank_1:
-								pair_rank_2 = playing[a].get_point_value()
+							if playing[a].point_value != pair_rank_1:
+								pair_rank_2 = playing[a].point_value
 	if pairs >= 2:
 		for i in range (len(playing)):
-			if playing[i].get_point_value() == pair_rank_1:
+			if playing[i].point_value == pair_rank_1:
 				total_1 += 1
 		for i in range (len(playing)):
-			if playing[i].get_point_value() == pair_rank_2:
+			if playing[i].point_value == pair_rank_2:
 				total_2 += 1
 		if (total_1 + total_2) == 5:
 			return True
@@ -249,17 +249,17 @@ def calculate_pairs():
 	pairs = 0
 	pair_rank = 0
 	for i in range (len(playing)):
-		first_rank = playing[i].get_point_value()
+		first_rank = playing[i].point_value
 		for a in range (len(playing)):
-			if playing[a].get_point_value() == first_rank:
+			if playing[a].point_value == first_rank:
 				if playing.index(playing[a]) == playing.index(playing[i]):
 					pass
 				else:
-					if playing[a].get_point_value() == pair_rank:
+					if playing[a].point_value == pair_rank:
 						pass
 					else:
 						pairs += 1
-						pair_rank = playing[a].get_point_value()
+						pair_rank = playing[a].point_value
 	if pairs == 0:
 		return 0
 	elif pairs == 1:
