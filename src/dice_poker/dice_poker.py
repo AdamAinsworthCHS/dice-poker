@@ -113,24 +113,36 @@ def play_hand():
 	print("Calculating hand...")
 	if calculate_flush() == True:
 		if calculate_straight == True:
-			print("Hand: Straight Flush. +5 dice +100 points")
-			game_manager.dice += 2
-			game_manager.score += 30
+			print("Hand: Straight Flush! +5 dice +100 points")
+			game_manager.dice += 5
+			game_manager.score += 100
 		else:
-			print("Hand: Flush. +2 dice +30 points")
+			print("Hand: Flush. +2 dice +40 points")
 			game_manager.dice += 2
 			game_manager.score += 30
+	elif calculate_kinds() == 4:
+		print("Hand: Four of a Kind. +4 dice +80 points")
+		game_manager.dice += 4
+		game_manager.score += 80
+	elif calculate_full_house() == True:
+		print("Hand: Full House. +2 dice +35 points")
+		game_manager.dice += 2
+		game_manager.score += 20
 	elif calculate_straight() == True:
 		print("Hand: Straight. +2 dice +30 points")
 		game_manager.dice += 2
 		game_manager.score += 30
-	elif calculate_pairs() == 1:
-		print("Hand: Pair. +10 points")
-		game_manager.score += 10
+	elif calculate_kinds() == 3:
+		print("Hand: Three of a Kind. +1 dice +25 points")
+		game_manager.dice += 1
+		game_manager.score += 25
 	elif calculate_pairs() == 2:
 		print("Hand: Two Pair +1 dice +15 points")
 		game_manager.dice += 1
 		game_manager.score += 15
+	elif calculate_pairs() == 1:
+		print("Hand: Pair. +10 points")
+		game_manager.score += 10
 	else:
 		print("Hand: High Card. No bonuses")
 	for i in range (len(playing)):
@@ -153,35 +165,6 @@ def calculate_flush():
 	return flush
 
 
-#Checks if the current poker hand is a pair or two pair
-def calculate_pairs():
-	first_rank = 0
-	pairs = 0
-	pair_position_1 = 100
-	pair_position_2 = 100
-	for i in range (len(playing)):
-		first_rank = playing[i].get_point_value()
-		for a in range (len(playing)):
-			if playing[a].get_point_value() == first_rank:
-				if playing.index(playing[a]) == playing.index(playing[i]):
-					pass
-				else:
-					if (playing.index(playing[a]) == pair_position_1) or (
-					playing.index(playing[i]) == pair_position_2) or (
-					playing.index(playing[a]) == pair_position_2) or (
-					playing.index(playing[i]) == pair_position_1):
-						pass
-					else:
-						pairs += 1
-						pair_position_1 = playing.index(playing[a])
-						pair_position_2 = playing.index(playing[i])
-	if pairs == 0:
-		return 0
-	elif pairs == 1:
-		return 1
-	elif pairs >= 2:
-		return 2
-
 #Checks if the current poker hand is a straight
 def calculate_straight():
 	straight = True
@@ -200,6 +183,89 @@ def calculate_straight():
 				break
 	return straight
 
+
+#Checks if the current poker hand is a three or four of a kind
+def calculate_kinds():
+	first_rank = 0
+	count = 0
+	for i in range (len(playing)):
+		first_rank = playing[i].get_point_value()
+		for a in range (len(playing)):
+			if playing[a].get_point_value() == first_rank:
+				if playing.index(playing[a]) == playing.index(playing[i]):
+					pass
+				else:
+					count += 1
+		count += 1
+		if count == 3:
+			return 3
+		elif count == 4:
+			return 4
+		else:
+			count = 0
+	if count == 0:
+		return count
+
+#Checks if the current poker hand is a full house
+def calculate_full_house():
+	first_rank = 0
+	pair_rank_1 = 0
+	pair_rank_2 = 0
+	total_1 = 0
+	total_2 = 0
+	pairs = 0
+	for i in range (len(playing)):
+		first_rank = playing[i].get_point_value()
+		for a in range (len(playing)):
+			if playing[a].get_point_value() == first_rank:
+				if playing.index(playing[a]) == playing.index(playing[i]):
+					pass
+				else:
+					if playing[a].get_point_value() == pair_rank_1 or playing[a].get_point_value() == pair_rank_2:
+						pass
+					else:
+						pairs += 1
+						if pair_rank_1 == 0:
+							pair_rank_1 = playing[a].get_point_value()
+						elif pair_rank_2 == 0:
+							if playing[a].get_point_value() != pair_rank_1:
+								pair_rank_2 = playing[a].get_point_value()
+	if pairs >= 2:
+		for i in range (len(playing)):
+			if playing[i].get_point_value() == pair_rank_1:
+				total_1 += 1
+		for i in range (len(playing)):
+			if playing[i].get_point_value() == pair_rank_2:
+				total_2 += 1
+		if (total_1 + total_2) == 5:
+			return True
+	else:
+		return False
+
+
+#Checks if the current poker hand is a pair or two pair
+def calculate_pairs():
+	first_rank = 0
+	pairs = 0
+	pair_rank = 0
+	for i in range (len(playing)):
+		first_rank = playing[i].get_point_value()
+		for a in range (len(playing)):
+			if playing[a].get_point_value() == first_rank:
+				if playing.index(playing[a]) == playing.index(playing[i]):
+					pass
+				else:
+					if playing[a].get_point_value() == pair_rank:
+						pass
+					else:
+						pairs += 1
+						pair_rank = playing[a].get_point_value()
+	if pairs == 0:
+		return 0
+	elif pairs == 1:
+		return 1
+	elif pairs >= 2:
+		return 2
 
 
 #Plays the card the player chose
