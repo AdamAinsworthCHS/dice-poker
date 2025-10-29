@@ -10,7 +10,9 @@ class Player:
 		self.name = name
 	
 
-	#Returns info about the player.
+	"""
+	This method returns info about the player.
+	"""
 	def __str__(self):
 		return (self.name + " has " + str(self.score) + " points and " + str(self.dice) + " dice.")
 

@@ -8,15 +8,15 @@ from Player import Player
 from Hands import Hands
 from Deck import Deck
 
-straight_flush = Hands(100, 5, "Hand: Straight Flush! +5 dice +100 points")
-four_of_a_kind = Hands(80, 4, "Hand: Four of a Kind. +4 dice +80 points")
-full_house = Hands(50, 3, "Hand: Full House. +3 dice +50 points")
-flush = Hands(40, 2, "Hand: Flush. +2 dice +40 points")
-straight = Hands(30, 2, "Hand: Straight. +2 dice +30 points")
-three_of_a_kind = Hands(25, 1, "Hand: Three of a Kind. +1 dice +25 points")
-two_pair = Hands(15, 1, "Hand: Two Pair. +1 dice +15 points")
-pair = Hands(10, 0, "Hand: Pair. +10 points")
-high_card = Hands(0, 0, "Hand: High Card. No bonuses")
+straight_flush = Hands(100, 5, "Straight Flush!")
+four_of_a_kind = Hands(80, 4, "Four of a Kind.")
+full_house = Hands(50, 3, "Full House.")
+flush = Hands(40, 2, "Flush.")
+straight = Hands(30, 2, "Straight.")
+three_of_a_kind = Hands(25, 1, "Three of a Kind.")
+two_pair = Hands(15, 1, "Two Pair.")
+pair = Hands(10, 0, "Pair.")
+high_card = Hands(0, 0, "High Card.")
 
 deck = Deck(52)
 
@@ -28,7 +28,12 @@ hand = []
 playing = []
 
 
-#Shows what cards are in hand and which are being played.
+"""
+This method first shows the player's current score and dice
+then it shows every card the player has
+then it shows what cards the player has currently selected to play
+after giving this info, it calls the game_process method.
+"""
 def show_cards():
 	print("")
 	print("Score: " + str(Player.score))
@@ -44,7 +49,13 @@ def show_cards():
 	return
 
 
-#Asks the player what action they want to take
+"""
+This method asks the player what command they wish to input
+typing roll rolls 1 die and draws that many cards
+typing a number plays that corresponding card
+typing play plays the current selected cards
+typing q quits the game.
+"""
 def game_process():
 	hand_length = len(hand)
 	cards_play_length = len(playing)
@@ -87,28 +98,44 @@ def game_process():
 		return
 
 
-#Calculates the point value of played hand and updates the score
+"""
+This method takes the current selected cards and
+calculates them to see what kind of poker hand
+they are. Then it gives the player the requisite
+points and dice for that poker hand.
+Finally, it gives them points for each
+card played.
+"""
 def play_hand():
 	print("Calculating hand...")
 	if Hands.calculate_flush(playing) == True:
 		if Hands.calculate_straight(playing) == True:
 			straight_flush.process_hand()
+			print(straight_flush)
 		else:
 			flush.process_hand()
+			print(flush)
 	elif Hands.calculate_kinds(playing) == 4:
 		four_of_a_kind.process_hand()
+		print(four_of_a_kind)
 	elif Hands.calculate_full_house(playing) == True:
 		full_house.process_hand()
+		print(full_house)
 	elif Hands.calculate_straight(playing) == True:
 		straight.process_hand()
+		print(straight)
 	elif Hands.calculate_kinds(playing) == 3:
 		three_of_a_kind.process_hand()
+		print(three_of_a_kind)
 	elif Hands.calculate_pairs(playing) == 2:
 		two_pair.process_hand()
+		print(two_pair)
 	elif Hands.calculate_pairs(playing) == 1:
 		pair.process_hand()
+		print(pair)
 	else:
 		high_card.process_hand()
+		print(high_card)
 	for i in range (len(playing)):
 		Player.score = Player.score + playing[i].point_value
 	playing.clear()
@@ -116,14 +143,21 @@ def play_hand():
 	return
 
 
-#Plays the card the player chose
+"""
+This method moves the card the player selected
+from the list of current cards into the 
+list of cards currently selected to be played.
+"""
 def process(play_cards):
 	playing.append(hand[int(play_cards) - 1])
 	hand.remove(hand[int(play_cards) - 1])
 	show_cards()
 	return
 
-
+"""
+This method gives the player 8 cards
+and begins the game.
+"""
 def main():
 	for i in range(8):
 		new_card = Deck.draw_card()

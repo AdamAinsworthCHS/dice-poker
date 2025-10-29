@@ -11,7 +11,9 @@ class Card:
 		self.name = name
 	
 	
-	#Returns name of the card as a string
+	"""
+	This method returns the card as a string.
+	"""
 	def __str__(self):
 		return self.name
 	

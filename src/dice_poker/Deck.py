@@ -31,12 +31,22 @@ class Deck:
 		self.card_amount = card_amount
 	
 	
-	#Returns the amount of cards in the deck
+	"""
+	This method returns the amount of
+	possible combinations the deck
+	can produce.
+	"""
 	def __str__(self):
 		return ("This deck has " + str(self.card_amount) + " possible card types.")
 	
 
-	#Draws a random card out of 52
+	"""
+	This method generates random numbers and uses
+	those numbers to pick a random suit and
+	rank for a card. Then, it creates a 
+	card object using the suit and rank
+	that was determined, and returns the card.
+	"""
 	def draw_card():
 		card_suit_id = random.randrange(1, 5)
 		card_value = random.randrange(2, 15)
