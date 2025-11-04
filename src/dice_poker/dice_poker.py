@@ -28,13 +28,14 @@ hand = []
 playing = []
 
 
-"""
-This method first shows the player's current score and dice
-then it shows every card the player has
-then it shows what cards the player has currently selected to play
-after giving this info, it calls the game_process method.
-"""
+
 def show_cards():
+	"""
+	This method first shows the player's current score and dice
+	then it shows every card the player has
+	then it shows what cards the player has currently selected to play
+	after giving this info, it calls the game_process method.
+	"""
 	print("")
 	print("Score: " + str(Player.score))
 	print("Dice: " + str(Player.dice))
@@ -49,14 +50,14 @@ def show_cards():
 	return
 
 
-"""
-This method asks the player what command they wish to input
-typing roll rolls 1 die and draws that many cards
-typing a number plays that corresponding card
-typing play plays the current selected cards
-typing q quits the game.
-"""
 def game_process():
+	"""
+	This method asks the player what command they wish to input
+	typing roll rolls 1 die and draws that many cards
+	typing a number plays that corresponding card
+	typing play plays the current selected cards
+	typing q quits the game.
+	"""
 	hand_length = len(hand)
 	cards_play_length = len(playing)
 	play_cards = input("Draw Cards ('roll') Play Card ('#') Play Hand ('play') Quit ('q'): ")
@@ -98,15 +99,15 @@ def game_process():
 		return
 
 
-"""
-This method takes the current selected cards and
-calculates them to see what kind of poker hand
-they are. Then it gives the player the requisite
-points and dice for that poker hand.
-Finally, it gives them points for each
-card played.
-"""
 def play_hand():
+	"""
+	This method takes the current selected cards and
+	calculates them to see what kind of poker hand
+	they are. Then it gives the player the requisite
+	points and dice for that poker hand.
+	Finally, it gives them points for each
+	card played.
+	"""
 	print("Calculating hand...")
 	if Hands.calculate_flush(playing) == True:
 		if Hands.calculate_straight(playing) == True:
@@ -143,22 +144,23 @@ def play_hand():
 	return
 
 
-"""
-This method moves the card the player selected
-from the list of current cards into the 
-list of cards currently selected to be played.
-"""
 def process(play_cards):
+	"""
+	This method moves the card the player selected
+	from the list of current cards into the 
+	list of cards currently selected to be played.
+	"""
 	playing.append(hand[int(play_cards) - 1])
 	hand.remove(hand[int(play_cards) - 1])
 	show_cards()
 	return
 
-"""
-This method gives the player 8 cards
-and begins the game.
-"""
+
 def main():
+	"""
+	This method gives the player 8 cards
+	and begins the game.
+	"""
 	for i in range(8):
 		new_card = Deck.draw_card()
 		hand.append(new_card)

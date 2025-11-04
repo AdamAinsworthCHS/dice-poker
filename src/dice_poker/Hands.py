@@ -10,22 +10,23 @@ class Hands:
 		self.dice_given = dice_given
 		self.name = name
 
-
-	"""
-	This method gives the corresponding amount
-	of dice and points for the given hand.
-	"""
+	
 	def process_hand(self):
+		"""
+		This method gives the corresponding amount
+		of dice and points for the given hand.
+		"""
 		Player.score += self.score_given
 		Player.dice += self.dice_given
 	
-	"""
-	This method picks the first suit played and
-	checks it against every other suit. If 
-	all the suits match, it returns that
-	the hand played is a flush.
-	"""
+	
 	def calculate_flush(playing):
+		"""
+		This method picks the first suit played and
+		checks it against every other suit. If 
+		all the suits match, it returns that
+		the hand played is a flush.
+		"""
 		if len(playing) != 5:
 			return False
 		first_suit = playing[0].suit
@@ -36,14 +37,14 @@ class Hands:
 				break
 		return flush
 
-
-	"""
-	This method first sorts the current played
-	hand by rank, and then checks if the gaps
-	between each rank are 1. If this is
-	true, then it is a straight.
-	"""
+	
 	def calculate_straight(playing):
+		"""
+		This method first sorts the current played
+		hand by rank, and then checks if the gaps
+		between each rank are 1. If this is
+		true, then it is a straight.
+		"""
 		straight = True
 		if len(playing) != 5:
 			return False
@@ -60,16 +61,16 @@ class Hands:
 					break
 		return straight
 
-
-	"""
-	This method picks a card in hand and
-	checks it to see how many other cards
-	in the hand share its rank. It repeats
-	this for every card in the hand. If
-	there are a certain amount of matches,
-	it returns the corresponding variable.
-	"""
+	
 	def calculate_kinds(playing):
+		"""
+		This method picks a card in hand and
+		checks it to see how many other cards
+		in the hand share its rank. It repeats
+		this for every card in the hand. If
+		there are a certain amount of matches,
+		it returns the corresponding variable.
+		"""
 		first_rank = 0
 		count = 0
 		for i in range (len(playing)):
@@ -90,14 +91,15 @@ class Hands:
 		if count == 0:
 			return count
 
-	"""
-	This method searches the current player's
-	hand for pairs. If it finds two, it will
-	then see if one of those pairs is actually
-	a group of 3. If it is, then
-	it reports that the hand is a full house.
-	"""
+	
 	def calculate_full_house(playing):
+		"""
+		This method searches the current player's
+		hand for pairs. If it finds two, it will
+		then see if one of those pairs is actually
+		a group of 3. If it is, then
+		it reports that the hand is a full house.
+		"""
 		first_rank = 0
 		pair_rank_1 = 0
 		pair_rank_2 = 0
@@ -133,15 +135,15 @@ class Hands:
 			return False
 
 
-	"""
-	This method goes through the player's hand and
-	picks the rank of the first card in that hand.
-	Then it checks that rank to see if it pairs
-	with another card. It repeats this for
-	the entire hand and returns how many pairs
-	it found.
-	"""
 	def calculate_pairs(playing):
+		"""
+		This method goes through the player's hand and
+		picks the rank of the first card in that hand.
+		Then it checks that rank to see if it pairs
+		with another card. It repeats this for
+		the entire hand and returns how many pairs
+		it found.
+		"""
 		first_rank = 0
 		pairs = 0
 		pair_rank = 0
@@ -165,10 +167,10 @@ class Hands:
 			return 2
 	
 	
-	"""
-	This method returns info about the hand.
-	"""
 	def __str__(self):
+		"""
+		This method returns info about the hand.
+		"""
 		return ("Hand: " + self.name + " +" + str(self.dice_given) + " dice +" + str(self.score_given) + " points")
 
 

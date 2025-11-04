@@ -9,11 +9,11 @@ class Player:
 	def __init__(self, name):
 		self.name = name
 	
-
-	"""
-	This method returns info about the player.
-	"""
+	
 	def __str__(self):
+		"""
+		This method returns info about the player.
+		"""
 		return (self.name + " has " + str(self.score) + " points and " + str(self.dice) + " dice.")
 
 

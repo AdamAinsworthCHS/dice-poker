@@ -11,10 +11,10 @@ class Card:
 		self.name = name
 	
 	
-	"""
-	This method returns the card as a string.
-	"""
 	def __str__(self):
+		"""
+		This method returns the card as a string.
+		"""
 		return self.name
 	
 
