@@ -1,1 +1,1 @@
-# dice-poker
+# dice-card
