@@ -1,5 +1,5 @@
 """
-Dice Poker Game
+Dice Card Game
 by Adam Ainsworth
 """
 import random
